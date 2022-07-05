@@ -1,9 +1,9 @@
 import  CartContext  from '../../context/CartContext';
 import { useContext } from 'react';
 import React, { useState } from "react";
-
-const ItemCount = ({stock, initial, producto}) => {
-  
+// agrego por props el producto
+const ItemCount = ({stock, initial, actualizar, conteo}) => {
+  //aqui traigo la funcion addProductToCart desde el contexto para utilizarla en onAdd
   const { addProductCart } = useContext(CartContext);
   const [count, setCount] = useState(initial);
 
@@ -13,20 +13,21 @@ const ItemCount = ({stock, initial, producto}) => {
   }
 
   const decremento = () => {
-    if (count > 0) {
-      setCount(count - 1);
+    if (conteo > 0) {
+      actualizar(conteo - 1);
     }
   };
   const incremento = () => {
-    if (count < stock) {
-      setCount(count + 1);
+    if (conteo < stock) {
+      actualizar(conteo + 1);
 
     }
   };
     const onAdd = () => {
-      console.log(" Se agrego el Producto la cantidad de " + count);
-      addProductCart({...producto})
-      return stockSelec(count);
+      console.log(" Se agrego el Producto la cantidad de " + conteo);
+      //aqui agregamos la funcion addProduct y le pasamos el producto que trajimos por props
+      
+      return stockSelec(conteo);
     };
 stockSelec();
   return (
@@ -36,7 +37,7 @@ stockSelec();
           <button className="btn btn-neutro font-bold text-white" onClick={decremento}>
             -
           </button>
-          <input type="text" className="w-10 text-accent text-center  font-semibold focus:outline-none" pattern="[0-9]*\.?[0-9]*" value={count} />
+          <input type="text" className="w-10 text-accent text-center  font-semibold focus:outline-none" pattern="[0-9]*\.?[0-9]*" value={conteo} />
 
           <button className="btn btn-neutro font-bold text-white" onClick={incremento}>
             +

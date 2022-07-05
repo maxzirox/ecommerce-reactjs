@@ -1,6 +1,15 @@
 import ItemCount from "../Items/ItemCount";
+import  CartContext  from '../../context/CartContext';
+import { useContext } from 'react';
 
 const ItemDetail = ({ data, ptamano }) => {
+  const { addProductCart } = useContext(CartContext);
+  const item = data;
+  const onAdd = (e) => {
+    e.preventDefault()
+    addProductCart({...data})
+    
+  };
   return (
     <>
       <div class="flex w-full">
@@ -12,8 +21,9 @@ const ItemDetail = ({ data, ptamano }) => {
           <h1 className="text-2xl font-extrabold">{data.titulo}</h1>
           <p>{data.descripcion}</p>
           <price> {data.precio_final}</price>
-          <ItemCount stock={data.stock} initial={1} producto={data}/>
+          <ItemCount stock={data.stock} initial={1} producto={item}/>
           {ptamano}
+          <button variant="outlined" onClick={onAdd}>agregar</button>
         </div>
       </div>
     </>
